@@ -103,7 +103,7 @@ class Transaction:
             print_msg('Unable to parse balance remaining from entry {}.'.format(entry), 'ERROR')
             raise
         self.info = entry
-        self.pending = entry.get('description', '').strip().lower().endswith('(pending)') or not entry.get('balance', '').strip()
+        self.pending = entry.get('description', '').strip().lower().endswith('(pending)') or ('balance' in entry and not entry['balance'].strip())
 
     def __repr__(self):
         return ('[Pending] ' if self.pending else '') + ', '.join(['{}: {}'.format(key, val if val else 'None') for key, val in self.info.iteritems()])
